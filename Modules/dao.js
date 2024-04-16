@@ -24,10 +24,9 @@ export const deleteModule = (courseId, moduleId) =>
     { course: courseId },
     { $pull: { modules: { _id: moduleId } } }
   );
-export const addLesson = (courseId, moduleId, lesson) => {
+export const addLesson = async (courseId, moduleId, lesson) => {
   const newLesson = { ...lesson, _id: uuid() };
-  console.log(courseId, moduleId, newLesson);
-  model.updateOne(
+  await model.updateOne(
     { course: courseId, "modules._id": moduleId },
     { $push: { "modules.$.lessons": newLesson } }
   );
